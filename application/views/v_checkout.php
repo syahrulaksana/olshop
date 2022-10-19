@@ -151,7 +151,7 @@
     <!-- this row will not appear when printing -->
     <div class="row no-print">
         <div class="col-12">
-            <a href="<?= base_url('belanja'); ?>" rel="noopener" class="btn btn-primary"><i class="fas fa-backward mr-2"></i>Kembali</a>
+            <a href="<?= base_url('belanja'); ?>" rel="noopener" class="btn btn-danger"><i class="fas fa-backward mr-2"></i>Kembali</a>
             <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card mr-2"></i> Buat Pesanan
             </button>
         </div>
