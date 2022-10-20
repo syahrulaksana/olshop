@@ -35,7 +35,13 @@
         <div class="row">
 
             <?php foreach ($barang as $key => $value) : ?>
-                <div class="col-12 col-sm-6 col-md-3 d-flex align-items-stretch flex-column">
+                <div class="col-sm-3">
+                    <?php echo form_open('belanja/add');
+                    echo form_hidden('id', $value->id_barang);
+                    echo form_hidden('qty', 1);
+                    echo form_hidden('price', $value->harga);
+                    echo form_hidden('name', $value->nama_barang);
+                    echo form_hidden('redirect_page', str_replace('index.php/', '', current_url())) ?>
                     <div class="card bg-light d-flex flex-fill">
                         <div class="card-body">
                             <div class="row">
@@ -57,12 +63,12 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="text-right">
-                                        <a href="#" class="btn btn-sm btn-success">
+                                        <a href="<?= base_url('home/detail_barang/' . $value->id_barang); ?>" class="btn btn-sm btn-success">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                        <a href="#" class="btn btn-sm btn-primary">
+                                        <button type="submit" class="btn btn-sm btn-primary swalDefaultSuccess">
                                             <i class="fas fa-cart-plus"></i>
-                                        </a>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -74,4 +80,21 @@
         </div>
     </div>
 </div>
-</div>
+
+<script>
+    $(function() {
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
+
+        $('.swalDefaultSuccess').click(function() {
+            Toast.fire({
+                icon: 'success',
+                title: 'Barang berhasil dimasukan Ke Keranjang Chceckout untuk selesaikan pesanan!'
+            })
+        });
+    });
+</script>
