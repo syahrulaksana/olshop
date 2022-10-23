@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 19 Okt 2022 pada 13.50
+-- Waktu pembuatan: 20 Okt 2022 pada 09.12
 -- Versi server: 10.1.38-MariaDB
 -- Versi PHP: 5.6.40
 
@@ -130,6 +130,35 @@ INSERT INTO `tbl_registrasi_pelanggan` (`id_pelanggan`, `nama_pelanggan`, `email
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `tbl_rinci_transaksi`
+--
+
+CREATE TABLE `tbl_rinci_transaksi` (
+  `id_rinci` int(11) NOT NULL,
+  `no_order` varchar(25) DEFAULT NULL,
+  `id_barang` int(11) DEFAULT NULL,
+  `qty` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `tbl_rinci_transaksi`
+--
+
+INSERT INTO `tbl_rinci_transaksi` (`id_rinci`, `no_order`, `id_barang`, `qty`) VALUES
+(2, '20221020SDLZFEKA', 15, 2),
+(3, '20221020SDLZFEKA', 8, 4),
+(4, '20221020SDLZFEKA', 1, 2),
+(5, '20221020SDLZFEKA', 7, 2),
+(6, '20221020XNISZGLP', 15, 1),
+(7, '20221020XNISZGLP', 14, 1),
+(8, '20221020XNISZGLP', 8, 1),
+(9, '20221020XNISZGLP', 4, 1),
+(10, '20221020XNISZGLP', 6, 1),
+(11, '20221020XNISZGLP', 1, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `tbl_setting`
 --
 
@@ -147,6 +176,46 @@ CREATE TABLE `tbl_setting` (
 
 INSERT INTO `tbl_setting` (`id`, `nama_toko`, `lokasi`, `alamat_toko`, `no_telepon`) VALUES
 (1, 'Toko Saya', 468, 'jln.cimuncang rt 3 rw 5 no.16', '08534435352');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tbl_transaksi`
+--
+
+CREATE TABLE `tbl_transaksi` (
+  `id_transaksi` int(11) NOT NULL,
+  `no_order` varchar(25) DEFAULT NULL,
+  `tgl_order` date DEFAULT NULL,
+  `nama_penerima` varchar(25) DEFAULT NULL,
+  `no_telepon_penerima` varchar(15) DEFAULT NULL,
+  `provinsi` varchar(25) DEFAULT NULL,
+  `kota` varchar(25) DEFAULT NULL,
+  `alamat` text,
+  `kode_pos` varchar(8) DEFAULT NULL,
+  `expedisi` varchar(255) DEFAULT NULL,
+  `paket` varchar(255) DEFAULT NULL,
+  `estimasi` varchar(255) DEFAULT NULL,
+  `ongkir` int(11) DEFAULT NULL,
+  `berat` int(11) DEFAULT NULL,
+  `grand_total` int(11) DEFAULT NULL,
+  `total_bayar` int(11) DEFAULT NULL,
+  `status_bayar` int(1) DEFAULT NULL,
+  `bukti_bayar` text,
+  `atas_nama` varchar(25) DEFAULT NULL,
+  `nama_bank` varchar(25) DEFAULT NULL,
+  `no_rek` varchar(25) DEFAULT NULL,
+  `status_order` int(1) DEFAULT NULL,
+  `no_resi` varchar(25) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `tbl_transaksi`
+--
+
+INSERT INTO `tbl_transaksi` (`id_transaksi`, `no_order`, `tgl_order`, `nama_penerima`, `no_telepon_penerima`, `provinsi`, `kota`, `alamat`, `kode_pos`, `expedisi`, `paket`, `estimasi`, `ongkir`, `berat`, `grand_total`, `total_bayar`, `status_bayar`, `bukti_bayar`, `atas_nama`, `nama_bank`, `no_rek`, `status_order`, `no_resi`) VALUES
+(8, '20221020SDLZFEKA', '2022-10-20', 'Syahrul Aksana', '088625356573', 'Jawa Barat', 'Tasikmalaya', 'jln  cimuncang rt 3 rw 5', '243622', 'jne', 'CTC', '2-3 Hari', 72000, 8400, 14560000, 14632000, 0, NULL, NULL, NULL, NULL, 0, NULL),
+(9, '20221020XNISZGLP', '2022-10-20', 'ahmad ad', '08734575323', 'DI Yogyakarta', 'Bantul', 'jln imah sayah', '325523', 'jne', 'OKE', '2-3 Hari', 65000, 4912, 7095000, 7160000, 0, NULL, NULL, NULL, NULL, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -198,10 +267,22 @@ ALTER TABLE `tbl_registrasi_pelanggan`
   ADD PRIMARY KEY (`id_pelanggan`);
 
 --
+-- Indeks untuk tabel `tbl_rinci_transaksi`
+--
+ALTER TABLE `tbl_rinci_transaksi`
+  ADD PRIMARY KEY (`id_rinci`);
+
+--
 -- Indeks untuk tabel `tbl_setting`
 --
 ALTER TABLE `tbl_setting`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `tbl_transaksi`
+--
+ALTER TABLE `tbl_transaksi`
+  ADD PRIMARY KEY (`id_transaksi`);
 
 --
 -- Indeks untuk tabel `tbl_user`
@@ -236,6 +317,18 @@ ALTER TABLE `tbl_kategori`
 --
 ALTER TABLE `tbl_registrasi_pelanggan`
   MODIFY `id_pelanggan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT untuk tabel `tbl_rinci_transaksi`
+--
+ALTER TABLE `tbl_rinci_transaksi`
+  MODIFY `id_rinci` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT untuk tabel `tbl_transaksi`
+--
+ALTER TABLE `tbl_transaksi`
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT untuk tabel `tbl_user`
