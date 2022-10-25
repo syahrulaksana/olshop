@@ -1,5 +1,3 @@
-<div class="row">
-
     <div class="col-sm-12">
         <?php
         if ($this->session->flashdata('pesan')) {
@@ -39,7 +37,7 @@
                                 <th>Total Bayar</th>
                                 <th>Action</th>
                             </tr>
-                            <?php foreach ($belum_bayar as $key => $value) { ?>
+                            <?php foreach ($pesanan as $key => $value) { ?>
                                 <tr>
                                     <td><?= $value->no_order; ?></td>
                                     <td><?= $value->tgl_order; ?></td>
@@ -57,8 +55,9 @@
                                         <?php } ?>
                                     </td>
                                     <td>
-                                        <?php if ($value->status_bayar == 0) { ?>
-                                            <a href="<?= base_url('pesanan_saya/bayar/' . $value->id_transaksi); ?>" class="btn btn-sm btn-flat btn-primary">Bayar</a>
+                                        <?php if ($value->status_bayar == 1) { ?>
+                                            <button class="btn btn-sm btn-success btn-flat" data-toggle="modal" data-target="#cek<?= $value->id_transaksi ?>">Bukti bayar</button>
+                                            <a href="<?= base_url('admin/proses/' . $value->id_transaksi); ?>" class="btn btn-sm btn-flat btn-primary">Proses</a>
                                         <?php } ?>
                                     </td>
                                 </tr>
@@ -73,8 +72,9 @@
                                 <th>Tanggal Pesanan</th>
                                 <th>Expedisi</th>
                                 <th>Total Bayar</th>
+                                <th>Action</th>
                             </tr>
-                            <?php foreach ($diproses as $key => $value) { ?>
+                            <?php foreach ($pesanan_masuk as $key => $value) { ?>
                                 <tr>
                                     <td><?= $value->no_order; ?></td>
                                     <td><?= $value->tgl_order; ?></td>
@@ -84,8 +84,12 @@
                                         Ongkir : Rp. <?= number_format($value->ongkir, 0); ?>
                                     </td>
                                     <td><b>Rp. <?= number_format($value->total_bayar, 0); ?></b><br>
-                                        <span class="badge badge-success">Terverifikasi</span><br>
                                         <span class="badge badge-primary">Diproses / Dikemas</span>
+                                    </td>
+                                    <td>
+                                        <?php if ($value->status_bayar == 1) { ?>
+                                            <a href="<?= base_url('admin/kirim/' . $value->id_transaksi); ?>" class="btn btn-sm btn-flat btn-primary" data-toggle="modal" data-target="#kirim<?= $value->id_transaksi ?>"><i class="fa fa-paper-plane mr-2"></i> Kirim</a>
+                                        <?php } ?>
                                     </td>
                                 </tr>
                             <?php } ?>
@@ -100,9 +104,8 @@
                                 <th>Expedisi</th>
                                 <th>Total Bayar</th>
                                 <th>No Resi</th>
-                                <th>Action</th>
                             </tr>
-                            <?php foreach ($dikirim as $key => $value) { ?>
+                            <?php foreach ($pesanan_dikirim as $key => $value) { ?>
                                 <tr>
                                     <td><?= $value->no_order; ?></td>
                                     <td><?= $value->tgl_order; ?></td>
@@ -117,7 +120,6 @@
                                     <td>
                                         <h4><?= $value->no_resi; ?></h4>
                                     </td>
-                                    <td><a href="" class="btn btn-primary btn-sm btn-flat" data-toggle="modal" data-target="#diterima<?= $value->id_transaksi ?>">Pesanan diterima</a></td>
                                 </tr>
                             <?php } ?>
 
@@ -132,7 +134,7 @@
                                 <th>Total Bayar</th>
                                 <th>No Resi</th>
                             </tr>
-                            <?php foreach ($dikirim as $key => $value) { ?>
+                            <?php foreach ($pesanan_diterima as $key => $value) { ?>
                                 <tr>
                                     <td><?= $value->no_order; ?></td>
                                     <td><?= $value->tgl_order; ?></td>
@@ -142,7 +144,7 @@
                                         Ongkir : Rp. <?= number_format($value->ongkir, 0); ?>
                                     </td>
                                     <td><b>Rp. <?= number_format($value->total_bayar, 0); ?></b><br>
-                                        <span class="badge badge-success">Pesanan diterima</span></span>
+                                        <span class="badge badge-success">Pesanan berhasil diterima</span>
                                     </td>
                                     <td>
                                         <h4><?= $value->no_resi; ?></h4>
@@ -157,28 +159,98 @@
             <!-- /.card -->
         </div>
     </div>
-</div>
-<?php foreach ($dikirim as $key => $value) { ?>
-    <div class="modal fade" id="diterima<?= $value->id_transaksi ?>">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Pesanan diterima</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+
+    <!-- modal cek bukti pembayaran -->
+    <?php foreach ($pesanan as $key => $value) { ?>
+        <div class="modal fade" id="cek<?= $value->id_transaksi ?>">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title"><?= $value->no_order ?></h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table">
+                            <tr>
+                                <th>Nama Bank</th>
+                                <th>:</th>
+                                <td><?= $value->nama_bank ?></td>
+                            </tr>
+                            <tr>
+                                <th>No Rekening</th>
+                                <th>:</th>
+                                <td><?= $value->no_rek ?></td>
+                            </tr>
+                            <tr>
+                                <th>Atas Nama</th>
+                                <th>:</th>
+                                <td><?= $value->atas_nama ?></td>
+                            </tr>
+                            <tr>
+                                <th>Total Bayar</th>
+                                <th>:</th>
+                                <td>Rp. <?= number_format($value->total_bayar, 0) ?></td>
+                            </tr>
+                        </table>
+                        <img class="img-fluid pad" src="<?= base_url('assets/bukti_bayar/') . $value->bukti_bayar ?>" alt="">
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <p>Apakah pesanan anda telah diterima?</p>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Tidak</button>
-                    <a href="<?= base_url('pesanan_saya/diterima/' . $value->id_transaksi) ?>" class="btn btn-primary">Ya</a>
-                </div>
+                <!-- /.modal-content -->
             </div>
-            <!-- /.modal-content -->
+            <!-- /.modal-dialog -->
         </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
-<?php } ?>
+        <!-- /.modal -->
+    <?php } ?>
+
+    <!-- modal cek bukti pembayaran -->
+    <?php foreach ($pesanan_masuk as $key => $value) { ?>
+        <div class="modal fade" id="kirim<?= $value->id_transaksi ?>">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title"><?= $value->no_order ?></h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <?php echo form_open('admin/kirim/' . $value->id_transaksi); ?>
+                        <table class="table">
+                            <tr>
+                                <th>Expedisi</th>
+                                <th>:</th>
+                                <td><?= $value->expedisi ?></td>
+                            </tr>
+                            <tr>
+                                <th>Paket</th>
+                                <th>:</th>
+                                <td><?= $value->paket ?></td>
+                            </tr>
+                            <tr>
+                                <th>Ongkir</th>
+                                </th>
+                                <th>:</th>
+                                <td>Rp. <?= number_format($value->ongkir, 0) ?></td>
+                            </tr>
+                            <tr>
+                                <th>No Resi</th>
+                                <th>:</th>
+                                <td><input name="no_resi" class="form_control" placeholder="No Resi" required></td>
+                            </tr>
+                        </table>
+
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Kirim</button>
+                    </div>
+                    <?php echo form_close() ?>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+    <?php } ?>

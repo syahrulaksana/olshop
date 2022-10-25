@@ -9,6 +9,7 @@ class Admin extends CI_Controller
     {
         parent::__construct();
         $this->load->model('m_admin');
+        $this->load->model('m_pesanan_masuk');
     }
 
 
@@ -50,6 +51,42 @@ class Admin extends CI_Controller
             $this->session->set_flashdata('pesan', 'Settingan berhasil diganti!!!');
             redirect('admin/setting');
         }
+    }
+
+    public function pesanan_masuk()
+    {
+        $data = array(
+            'title' => 'Pesanan Masuk',
+            'pesanan' => $this->m_pesanan_masuk->pesanan(),
+            'pesanan_masuk' => $this->m_pesanan_masuk->pesanan_masuk(),
+            'pesanan_dikirim' => $this->m_pesanan_masuk->pesanan_dikirim(),
+            'pesanan_diterima' => $this->m_pesanan_masuk->pesanan_diterima(),
+            'isi' => 'v_pesanan_masuk',
+        );
+        $this->load->view('layout/v_wrapper_backend', $data, FALSE);
+    }
+
+    public function proses($id_transaksi)
+    {
+        $data = array(
+            'id_transaksi' => $id_transaksi,
+            'status_order' => '1',
+        );
+        $this->m_pesanan_masuk->update_order($data);
+        $this->session->set_flashdata('pesan', 'Pesanan Berhasil diproses');
+        redirect('admin/pesanan_masuk');
+    }
+
+    public function kirim($id_transaksi)
+    {
+        $data = array(
+            'id_transaksi' => $id_transaksi,
+            'no_resi' => $this->input->post('no_resi'),
+            'status_order' => '2',
+        );
+        $this->m_pesanan_masuk->update_order($data);
+        $this->session->set_flashdata('pesan', 'Pesanan Berhasil dikirim!');
+        redirect('admin/pesanan_masuk');
     }
 }
 

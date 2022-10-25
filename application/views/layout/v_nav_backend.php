@@ -37,7 +37,7 @@
                with font-awesome or any other icon font library -->
                 <li class="nav-item">
                     <a href="<?= base_url('admin'); ?>" class="nav-link <?php if (
-                                                                            $this->uri->segment(1) == 'admin'
+                                                                            $this->uri->segment(1) == 'admin' and $this->uri->segment(2) == ""
                                                                         ) {
                                                                             echo "active";
                                                                         } ?>">
@@ -80,6 +80,17 @@
                 </li>
 
                 <li class="nav-item">
+                    <a href="<?= base_url('admin/pesanan_masuk') ?>" class="nav-link <?php if (
+                                                                                            $this->uri->segment(2) == 'pesanan_masuk' and $this->uri->segment(1) == 'admin'
+                                                                                        ) {
+                                                                                            echo "active";
+                                                                                        } ?>">
+                        <i class="nav-icon fas fa-download"></i>
+                        <p>Pesanan Masuk</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
@@ -112,7 +123,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= base_url('admin/setting'); ?>" class="nav-link">
+                    <a href="<?= base_url('admin/setting'); ?>" class="nav-link <?php if (
+                                                                                    $this->uri->segment(2) == 'setting' and $this->uri->segment(1) == 'admin'
+                                                                                ) {
+                                                                                    echo "active";
+                                                                                } ?>">
                         <i class="nav-icon fas fa-bars"></i>
                         <p>
                             Setting
