@@ -7,7 +7,7 @@
             <div class="card card-outline card-primary">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="login-box-msg">Buat Akun</h4>
+                        <h4 class="login-box-msg"><b>AYO DAFTAR</b></h4>
 
                         <?php
                         echo validation_errors('<div class="alert alert-warning alert-dismissible">
@@ -61,15 +61,17 @@
 
                                 </div>
                                 <!-- /.col -->
-                                <div class="col-4">
+                                <br>
+                                <div class="col-12">
                                     <button type="submit" class="btn btn-primary btn-block">Register</button>
                                 </div>
                                 <!-- /.col -->
                             </div>
                         </form>
                         <?php echo form_close(); ?>
-
-                        <p>Sudah punya akun? <a href="<?= base_url('pelanggan/login'); ?>" class="text-center">Login</a></p>
+                        <br>
+                        <br>
+                        <p class="text-center">Sudah punya akun? <a href="<?= base_url('pelanggan/login'); ?>">Login</a></p>
                     </div>
                 </div>
             </div>
