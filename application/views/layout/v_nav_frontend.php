@@ -56,13 +56,13 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<?= base_url('pelanggan/login'); ?>">
-                    <span class="brand-text font-weight-light"><b>Login</b></span>
+                    <span class="brand-text font-weight-light mr-2"><b>Login</b></span>
                     <img src="<?= base_url('assets/foto/profile_default.jpg'); ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                 </a>
             </li>
         <?php } else { ?>
             <a class="nav-link" data-toggle="dropdown" href="#">
-                <span class="brand-text font-weight-light"><?= $this->session->userdata('nama_pelanggan'); ?></span>
+                <span class="brand-text font-weight-light mr-2"><?= $this->session->userdata('nama_pelanggan'); ?></span>
                 <img src="<?= base_url('assets/foto/' . $this->session->userdata('foto')); ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
             </a>
 
