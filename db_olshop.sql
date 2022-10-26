@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 20 Okt 2022 pada 09.12
+-- Waktu pembuatan: 26 Okt 2022 pada 09.48
 -- Versi server: 10.1.38-MariaDB
 -- Versi PHP: 5.6.40
 
@@ -125,7 +125,29 @@ CREATE TABLE `tbl_registrasi_pelanggan` (
 --
 
 INSERT INTO `tbl_registrasi_pelanggan` (`id_pelanggan`, `nama_pelanggan`, `email`, `password`, `foto`) VALUES
-(1, 'Syahrul Aksana', 'syahrulaksana@gmail.com', '123', 'po.jpg');
+(1, 'Syahrul Aksana', 'syahrulaksana@gmail.com', '123', 'po.jpg'),
+(2, 'mamat', 'mamat@gmail.com', '12345', 'po.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tbl_rekening`
+--
+
+CREATE TABLE `tbl_rekening` (
+  `id_rekening` int(11) NOT NULL,
+  `nama_bank` varchar(25) DEFAULT NULL,
+  `no_rek` varchar(25) DEFAULT NULL,
+  `atas_nama` varchar(25) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `tbl_rekening`
+--
+
+INSERT INTO `tbl_rekening` (`id_rekening`, `nama_bank`, `no_rek`, `atas_nama`) VALUES
+(1, 'BRI', '2374-8273-2346-3474', 'Syahrul Aksana'),
+(2, 'BNI', '3648-9723-6362', 'Syahrul Aksana');
 
 -- --------------------------------------------------------
 
@@ -154,7 +176,13 @@ INSERT INTO `tbl_rinci_transaksi` (`id_rinci`, `no_order`, `id_barang`, `qty`) V
 (8, '20221020XNISZGLP', 8, 1),
 (9, '20221020XNISZGLP', 4, 1),
 (10, '20221020XNISZGLP', 6, 1),
-(11, '20221020XNISZGLP', 1, 1);
+(11, '20221020XNISZGLP', 1, 1),
+(12, '20221023FNDWNMXE', 14, 1),
+(13, '20221023FNDWNMXE', 13, 1),
+(14, '20221023FNDWNMXE', 12, 1),
+(15, '20221023N9ZRJGDK', 15, 1),
+(16, '20221023N9ZRJGDK', 11, 1),
+(17, '20221023N9ZRJGDK', 14, 1);
 
 -- --------------------------------------------------------
 
@@ -185,6 +213,7 @@ INSERT INTO `tbl_setting` (`id`, `nama_toko`, `lokasi`, `alamat_toko`, `no_telep
 
 CREATE TABLE `tbl_transaksi` (
   `id_transaksi` int(11) NOT NULL,
+  `id_pelanggan` int(11) DEFAULT NULL,
   `no_order` varchar(25) DEFAULT NULL,
   `tgl_order` date DEFAULT NULL,
   `nama_penerima` varchar(25) DEFAULT NULL,
@@ -213,9 +242,11 @@ CREATE TABLE `tbl_transaksi` (
 -- Dumping data untuk tabel `tbl_transaksi`
 --
 
-INSERT INTO `tbl_transaksi` (`id_transaksi`, `no_order`, `tgl_order`, `nama_penerima`, `no_telepon_penerima`, `provinsi`, `kota`, `alamat`, `kode_pos`, `expedisi`, `paket`, `estimasi`, `ongkir`, `berat`, `grand_total`, `total_bayar`, `status_bayar`, `bukti_bayar`, `atas_nama`, `nama_bank`, `no_rek`, `status_order`, `no_resi`) VALUES
-(8, '20221020SDLZFEKA', '2022-10-20', 'Syahrul Aksana', '088625356573', 'Jawa Barat', 'Tasikmalaya', 'jln  cimuncang rt 3 rw 5', '243622', 'jne', 'CTC', '2-3 Hari', 72000, 8400, 14560000, 14632000, 0, NULL, NULL, NULL, NULL, 0, NULL),
-(9, '20221020XNISZGLP', '2022-10-20', 'ahmad ad', '08734575323', 'DI Yogyakarta', 'Bantul', 'jln imah sayah', '325523', 'jne', 'OKE', '2-3 Hari', 65000, 4912, 7095000, 7160000, 0, NULL, NULL, NULL, NULL, 0, NULL);
+INSERT INTO `tbl_transaksi` (`id_transaksi`, `id_pelanggan`, `no_order`, `tgl_order`, `nama_penerima`, `no_telepon_penerima`, `provinsi`, `kota`, `alamat`, `kode_pos`, `expedisi`, `paket`, `estimasi`, `ongkir`, `berat`, `grand_total`, `total_bayar`, `status_bayar`, `bukti_bayar`, `atas_nama`, `nama_bank`, `no_rek`, `status_order`, `no_resi`) VALUES
+(8, 1, '20221020SDLZFEKA', '2022-10-20', 'Syahrul Aksana', '088625356573', 'Jawa Barat', 'Tasikmalaya', 'jln  cimuncang rt 3 rw 5', '243622', 'jne', 'CTC', '2-3 Hari', 72000, 8400, 14560000, 14632000, 0, NULL, NULL, NULL, NULL, 0, NULL),
+(9, 1, '20221020XNISZGLP', '2022-10-20', 'ahmad ad', '08734575323', 'DI Yogyakarta', 'Bantul', 'jln imah sayah', '325523', 'jne', 'OKE', '2-3 Hari', 65000, 4912, 7095000, 7160000, 1, 'buktibayar1.jpg', 'Bima', 'BRI', '3242-4234-2345-3424', 2, 'OKSH0348763764'),
+(10, 1, '20221023FNDWNMXE', '2022-10-23', 'Imah', '082476626574', 'Bangka Belitung', 'Bangka Selatan', 'jlan bumi sayah', '23234', 'jne', 'OKE', '3-6 Hari', 152000, 3400, 2499000, 2651000, 1, 'buktibayar.jpg', 'Budi', 'BRI', '3242-4234-2345-3424', 3, 'JHK0239472394894'),
+(11, 2, '20221023N9ZRJGDK', '2022-10-23', 'mamat', '08734575323', 'Jawa Barat', 'Ciamis', 'jln imah sayah', '434235', 'jne', 'REG', '2-3 Hari', 32000, 3900, 2900000, 2932000, 0, NULL, NULL, NULL, NULL, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -267,6 +298,12 @@ ALTER TABLE `tbl_registrasi_pelanggan`
   ADD PRIMARY KEY (`id_pelanggan`);
 
 --
+-- Indeks untuk tabel `tbl_rekening`
+--
+ALTER TABLE `tbl_rekening`
+  ADD PRIMARY KEY (`id_rekening`);
+
+--
 -- Indeks untuk tabel `tbl_rinci_transaksi`
 --
 ALTER TABLE `tbl_rinci_transaksi`
@@ -316,19 +353,25 @@ ALTER TABLE `tbl_kategori`
 -- AUTO_INCREMENT untuk tabel `tbl_registrasi_pelanggan`
 --
 ALTER TABLE `tbl_registrasi_pelanggan`
-  MODIFY `id_pelanggan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_pelanggan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT untuk tabel `tbl_rekening`
+--
+ALTER TABLE `tbl_rekening`
+  MODIFY `id_rekening` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `tbl_rinci_transaksi`
 --
 ALTER TABLE `tbl_rinci_transaksi`
-  MODIFY `id_rinci` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_rinci` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT untuk tabel `tbl_transaksi`
 --
 ALTER TABLE `tbl_transaksi`
-  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT untuk tabel `tbl_user`
