@@ -29,7 +29,7 @@
 <div class="col-lg-3 col-6">
     <div class="small-box bg-warning">
         <div class="inner">
-            <h3>150</h3>
+            <h3><?= $total_registrasi_pelanggan ?></h3>
 
             <p>Pelanggan</p>
         </div>

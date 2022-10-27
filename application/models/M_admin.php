@@ -9,6 +9,10 @@ class M_admin extends CI_Model
     {
         return $this->db->get('tbl_barang')->num_rows();
     }
+    public function total_registrasi_pelanggan()
+    {
+        return $this->db->get('tbl_registrasi_pelanggan')->num_rows();
+    }
 
     public function total_kategori()
     {
